@@ -1,0 +1,55 @@
+##exemplo: elk stack extraindo dados de um banco psql##
+version: '3.3'
+
+services:
+## ELK stack
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+    container_name: elasticsearch
+    environment: 
+      - discovery.type=single-node
+    ports: 
+      - 9200:9200
+      - 9300:9300
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.3.1
+    container_name: kibana
+    ports:
+      - 5601:5601
+    links: 
+      - "elasticsearch:elasticsearch"
+      
+  postgres:
+    image: postgres:9.4
+    container_name: psql_GSAN
+    volumes:
+      - ../psql/db-psql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 
+    environment:
+      - POSTGRES_PASSWORD=psqlpw
+      - POSTGRES_USER=teste
+
+  logstash_postgres:
+    image: docker.elastic.co/logstash/logstash:6.3.1
+    container_name: logstash_postgres
+    environment:
+      - bin/plugin install logstash-input-jdbc
+    links: 
+      - "postgres:postgres"
+      - "elasticsearch:elasticsearch"
+    volumes:
+      - ./pipeline_postgres/:/usr/share/logstash/pipeline/
+      - ./jdbc_driver/:/usr/share/logstash/drivers/
+  
+  # fscrawler: 
+  #  image: shadiakiki1986/fscrawler:2.4
+  #  container_name: fscrawler_GL
+  #  links:
+  #    - "elasticsearch:elasticsearch"
+  #  volumes:
+  #    - "./GL/testes:/usr/share/fscrawler/data/"
+  #    - "./fscrawler/myjob:/usr/share/fscrawler/config/myjob"
+  #  environment: 
+  #    - --config_dir /usr/share/fscrawler/config 
