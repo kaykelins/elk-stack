@@ -1,0 +1,15 @@
+input {
+
+  }
+  
+filter{
+
+}
+
+output {
+    elasticsearch {
+        index => "tests"
+        document_type => "tests"
+        hosts => [ "elasticsearch:9200" ] 
+    }
+}
