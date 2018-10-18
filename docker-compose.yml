@@ -19,13 +19,10 @@ services:
     links: 
       - "elasticsearch:elasticsearch"
       
-  logstash_postgres:
+  logstash:
     image: docker.elastic.co/logstash/logstash:6.4.2
     container_name: logstash
-    environment:
-
     links: 
-      - "postgres:postgres"
       - "elasticsearch:elasticsearch"
     volumes:
       - ./pipeline_postgres/:/usr/share/logstash/pipeline/
