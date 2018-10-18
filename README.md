@@ -1,2 +1,2 @@
 # elk-stack
-simple elasticsearch deploy in container
+simple elasticsearch logstash and kibana deploy in container environment for test.
