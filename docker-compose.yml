@@ -1,4 +1,3 @@
-##exemplo: elk stack extraindo dados de um banco psql##
 version: '3.3'
 
 services:
