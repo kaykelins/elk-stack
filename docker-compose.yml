@@ -30,13 +30,3 @@ services:
       - "elasticsearch:elasticsearch"
     volumes:
       - ./pipeline_postgres/:/usr/share/logstash/pipeline/
-  
-  # fscrawler: 
-  #  image: shadiakiki1986/fscrawler:2.4
-  #  container_name: fscrawler_GL
-  #  links:
-  #    - "elasticsearch:elasticsearch"
-  #  volumes:
-  #    - "./fscrawler/myjob:/usr/share/fscrawler/config/myjob"
-  #  environment: 
-  #    - --config_dir /usr/share/fscrawler/config 
